@@ -30,9 +30,12 @@ for file in tqdm(files, desc="Parsing activities...", unit_scale=True):
         df = json.loads(data)
         try:
             for x in df['activities']:
+                    embed()
+                    sys.exit(1)     
                     start = datetime.datetime.fromtimestamp(x['start_epoch_ms']/1000)
                     stop = datetime.datetime.fromtimestamp(x['end_epoch_ms']/1000)
-                    log.info(f"Start: {start} Stop: {stop} Emotion: {x['tags'].get('emotion', 'None')} Note: {x['tags'].get('note', 'None')}")
+                    duration = stop-start
+                    log.info(f"Start: {start} Stop: {stop} Duration: {duration} Emotion: {x['tags'].get('emotion', 'None')} Note: {x['tags'].get('note', 'None')}")
         except KeyError:
             try:
                 start = datetime.datetime.fromtimestamp(x['start_epoch_ms']/1000)
